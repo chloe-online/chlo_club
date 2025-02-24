@@ -42,6 +42,8 @@
 					class="home-container"
 					onclick={toggleFlip}
 					onkeydown={(e) => e.key === 'Enter' && toggleFlip()}
+					role="button"
+					tabindex="0"
 				>
 					<Links />
 					<div class="footer">
@@ -55,6 +57,8 @@
 					class="home-container"
 					onclick={toggleFlip}
 					onkeydown={(e) => e.key === 'Enter' && toggleFlip()}
+					role="button"
+					tabindex="0"
 				>
 					<h1>♣</h1>
 					<div class="card-pattern">
@@ -119,7 +123,7 @@
 	}
 
 	.card-pattern h1 {
-		color: var(--watermark-text-color);
+		color: var(--text-color);
 		font-size: 1rem;
 		font-style: normal;
 		font-weight: 400;
