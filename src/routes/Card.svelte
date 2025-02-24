@@ -5,7 +5,7 @@
 
 	let flipped = $state(true);
 	let showHelpText = $state(false);
-	let helpTextTimer;
+	let helpTextTimer = $state(10000);
 
 	function toggleFlip() {
 		flipped = !flipped;
@@ -203,7 +203,7 @@
 	.card-container {
 		position: relative;
 		width: fit-content;
-		margin: auto;
+		margin: 0;
 	}
 
 	.help-text {

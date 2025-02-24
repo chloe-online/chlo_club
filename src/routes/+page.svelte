@@ -1,10 +1,8 @@
 <script>
-	import Home from './Card.svelte';
+	import Home from './Home.svelte';
 </script>
 
-<div class="page-container">
-	<Home />
-</div>
+<Home />
 
 <style>
 	:global(html),
@@ -17,13 +15,5 @@
 		--watermark-text-color: #dddddd;
 		background-color: var(--bg-color);
 		color: var(--text-color);
-	}
-
-	.page-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
 	}
 </style>
