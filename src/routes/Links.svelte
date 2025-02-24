@@ -1,43 +1,47 @@
 <script>
 	import Link from './Link.svelte';
+
+	function handleClick(e) {
+		e.stopPropagation();
+	}
 </script>
 
 <div class="links-container">
 	<h2>things chloe does</h2>
 	<ul class="links-list">
 		<li>
-			<Link name="shot diary" link="https://chlo.exposed" />
+			<Link name="shot diary" link="https://chlo.exposed" onClick={handleClick} />
 		</li>
 		<li>
-			<Link name="thoughts" link="https://www.tumblr.com/blog/nowhere2chlo" />
+			<Link name="thoughts" link="https://www.tumblr.com/blog/nowhere2chlo" onClick={handleClick} />
 		</li>
 		<li>
-			<Link name="music" link="https://soundcloud.com/kloe_e_club" />
+			<Link name="music" link="https://soundcloud.com/kloe_e_club" onClick={handleClick} />
 		</li>
 		<li>
-			<Link name="games" link="https://chloe-online.itch.io" />
+			<Link name="games" link="https://chloe-online.itch.io" onClick={handleClick} />
 		</li>
 	</ul>
 	<hr />
 	<ul class="socials-list">
 		<li>
 			[
-			<a href="https://www.instagram.com/nowhere2chlo">ig</a>
+			<a href="https://www.instagram.com/nowhere2chlo" onclick={handleClick}>ig</a>
 			]
 		</li>
 		<li>
 			[
-			<a href="https://www.twitter.com/chlo_exposed">x</a>
+			<a href="https://www.twitter.com/chlo_exposed" onclick={handleClick}>x</a>
 			]
 		</li>
 		<li>
 			[
-			<a href="https://www.pi.fyi/u/chloexposed">pi</a>
+			<a href="https://www.pi.fyi/u/chloexposed" onclick={handleClick}>pi</a>
 			]
 		</li>
 		<li>
 			[
-			<a href="https://bsky.app/profile/chloexposed.bsky.social">bsky</a>
+			<a href="https://bsky.app/profile/chloexposed.bsky.social" onclick={handleClick}>bsky</a>
 			]
 		</li>
 	</ul>

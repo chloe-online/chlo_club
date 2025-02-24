@@ -35,18 +35,14 @@
 </script>
 
 <div class="card-container">
-	<div
-		class="card"
-		onclick={(e) => {
-			toggleFlip();
-		}}
-		onkeydown={(e) => e.key === 'Enter' && toggleFlip()}
-		role="button"
-		tabindex="0"
-	>
+	<div class="card" role="button" tabindex="0">
 		<div class="card-inner" class:flipped>
 			<div class="card-front">
-				<div class="home-container">
+				<div
+					class="home-container"
+					onclick={toggleFlip}
+					onkeydown={(e) => e.key === 'Enter' && toggleFlip()}
+				>
 					<Links />
 					<div class="footer">
 						<p>always made with &lt;3</p>
@@ -55,7 +51,11 @@
 				</div>
 			</div>
 			<div class="card-back">
-				<div class="home-container">
+				<div
+					class="home-container"
+					onclick={toggleFlip}
+					onkeydown={(e) => e.key === 'Enter' && toggleFlip()}
+				>
 					<h1>♣</h1>
 					<div class="card-pattern">
 						<h1>JOIN THE CLUB</h1>

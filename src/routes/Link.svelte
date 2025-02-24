@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 
-	const { name, link } = $props();
+	const { name, link, onClick } = $props();
 
 	onMount(() => {
 		console.log('Link page mounted');
@@ -9,7 +9,7 @@
 </script>
 
 <div class="link-container">
-	<a href={link}>{name}</a>
+	<a href={link} onclick={onClick}>{name}</a>
 </div>
 
 <style>
@@ -29,6 +29,7 @@
 	}
 
 	a:hover {
+		text-decoration: None;
 		color: var(--bg-color);
 		background-color: var(--text-color);
 	}
