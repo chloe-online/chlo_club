@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 
-	import Link from './Link.svelte';
+	import Links from './Links.svelte';
 
 	let flipped = $state(true);
 	let showHelpText = $state(false);
@@ -47,21 +47,7 @@
 		<div class="card-inner" class:flipped>
 			<div class="card-front">
 				<div class="home-container">
-					<h2>where to find chloe</h2>
-					<ul class="links-list">
-						<li>
-							<Link name="shot diary" link="https://chlo.exposed" />
-						</li>
-						<li>
-							<Link name="thoughts" link="https://www.tumblr.com/blog/nowhere2chlo" />
-						</li>
-						<li>
-							<Link name="music" link="https://soundcloud.com/kloe_e_club" />
-						</li>
-						<li>
-							<Link name="games" link="https://chloe-online.itch.io" />
-						</li>
-					</ul>
+					<Links />
 					<div class="footer">
 						<p>always made with &lt;3</p>
 						<p>by chloe</p>
@@ -71,8 +57,9 @@
 			<div class="card-back">
 				<div class="home-container">
 					<h1>♣</h1>
-					<!-- <h1>chlo.club</h1> -->
-					<div class="card-pattern"></div>
+					<div class="card-pattern">
+						<h1>JOIN THE CLUB</h1>
+					</div>
 					<h1 style="transform: rotate(180deg)">♣</h1>
 				</div>
 			</div>
@@ -128,6 +115,16 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		text-align: center;
+	}
+
+	.card-pattern h1 {
+		color: var(--watermark-text-color);
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 400;
+		font-family: inherit;
+		line-height: 1;
 	}
 
 	.home-container {
@@ -160,27 +157,6 @@
 		font-weight: 400;
 		font-family: inherit;
 		line-height: 1;
-	}
-
-	.home-container h2 {
-		margin: 0 0 20px 0;
-		font-size: 2rem;
-		font-style: normal;
-		font-weight: 400;
-		font-family: inherit;
-	}
-
-	.links-list {
-		display: flex;
-		flex-direction: column;
-		align-items: left;
-		justify-content: left;
-		margin: 0px;
-		padding-left: 1rem;
-	}
-
-	.links-list li {
-		list-style: none;
 	}
 
 	.footer {
