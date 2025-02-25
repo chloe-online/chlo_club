@@ -70,7 +70,7 @@
 		</div>
 	</div>
 	<div class="help-text" class:visible={showHelpText}>
-		<p>flip me...</p>
+		<p>⟳ flip me...</p>
 	</div>
 </div>
 
@@ -191,6 +191,7 @@
 		width: 100%;
 		text-align: left;
 		bottom: -2rem;
+		left: -0.5rem;
 		font-size: 0.9rem;
 		color: var(--watermark-text-color);
 		opacity: 0;
