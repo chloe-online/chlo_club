@@ -113,6 +113,15 @@
 		background-color: var(--background-color);
 	}
 
+	.card-back h1 {
+		margin: 0;
+		padding: 0;
+		line-height: 0.7;
+		height: fit-content;
+		color: var(--text-color);
+		font-size: 4rem;
+	}
+
 	.card-pattern {
 		flex: 1;
 		background-size: 10px 10px;
@@ -123,8 +132,8 @@
 	}
 
 	.card-pattern h1 {
-		color: var(--text-color);
-		font-size: 1rem;
+		margin: 0px;
+		font-size: 4rem;
 		font-style: normal;
 		font-weight: 400;
 		font-family: inherit;
@@ -152,15 +161,6 @@
 		box-sizing: border-box;
 		margin: auto;
 		/* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3); */
-	}
-
-	.home-container h1 {
-		margin: 0px;
-		font-size: 4rem;
-		font-style: normal;
-		font-weight: 400;
-		font-family: inherit;
-		line-height: 1;
 	}
 
 	.footer {
