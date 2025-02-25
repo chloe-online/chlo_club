@@ -12,7 +12,7 @@
 		height: 100vh;
 		--bg-color: #ffffff;
 		--text-color: #333333;
-		--watermark-text-color: #dddddd;
+		--watermark-text-color: #cccccc;
 		background-color: var(--bg-color);
 		color: var(--text-color);
 	}
