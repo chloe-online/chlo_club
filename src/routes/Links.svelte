@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 	import Link from './Link.svelte';
 
-	function handleClick(e) {
+	function handleClick(e: MouseEvent) {
 		e.stopPropagation();
 	}
 </script>
