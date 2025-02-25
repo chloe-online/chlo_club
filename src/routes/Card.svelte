@@ -35,13 +35,13 @@
 </script>
 
 <div class="card-container">
-	<div class="card" role="button" tabindex="0">
-		<div class="card-inner" class:flipped>
+	<div class="card" class:flipped role="button" tabindex="0">
+		<div class="card-faces">
 			<div class="card-front">
 				<div
-					class="home-container"
+					class="card-inner-container"
 					onclick={toggleFlip}
-					onkeydown={(e) => e.key === 'Enter' && toggleFlip()}
+					onkeydown={toggleFlip}
 					role="button"
 					tabindex="0"
 				>
@@ -54,9 +54,9 @@
 			</div>
 			<div class="card-back">
 				<div
-					class="home-container"
+					class="card-inner-container"
 					onclick={toggleFlip}
-					onkeydown={(e) => e.key === 'Enter' && toggleFlip()}
+					onkeydown={toggleFlip}
 					role="button"
 					tabindex="0"
 				>
@@ -75,6 +75,7 @@
 </div>
 
 <style>
+	/* Card Base Styles */
 	.card {
 		perspective: 1000px;
 		width: min(320px, 90vw);
@@ -83,25 +84,33 @@
 		cursor: pointer;
 	}
 
-	.card-inner {
+	.card-faces {
 		position: relative;
 		width: 100%;
 		height: 100%;
-		transition: transform 0.8s;
 		transform-style: preserve-3d;
+		transition: transform 0.8s;
 	}
 
-	.card-inner.flipped {
+	.card.flipped .card-faces {
 		transform: rotateY(-180deg);
 	}
 
+	/* Card Container */
+	.card-container {
+		position: relative;
+		width: fit-content;
+		margin: 0;
+	}
+
+	/* Card Faces (Front & Back) */
 	.card-front,
 	.card-back {
 		position: absolute;
 		width: 100%;
 		height: 100%;
 		backface-visibility: hidden;
-		-webkit-backface-visibility: hidden; /* For Safari support */
+		-webkit-backface-visibility: hidden; /* Safari support */
 	}
 
 	.card-front {
@@ -113,15 +122,7 @@
 		background-color: var(--background-color);
 	}
 
-	.card-back h1 {
-		margin: 0;
-		padding: 0;
-		line-height: 0.7;
-		height: fit-content;
-		color: var(--text-color);
-		font-size: 4rem;
-	}
-
+	/* Card Content Styles */
 	.card-pattern {
 		flex: 1;
 		background-size: 10px 10px;
@@ -131,8 +132,9 @@
 		text-align: center;
 	}
 
-	.card-pattern h1 {
-		margin: 0px;
+	.card-pattern h1,
+	.card-back h1 {
+		margin: 0;
 		font-size: 4rem;
 		font-style: normal;
 		font-weight: 400;
@@ -140,12 +142,17 @@
 		line-height: 1;
 	}
 
-	.home-container {
-		height: 100%;
-		margin: 0;
+	.card-back h1 {
+		padding: 0;
+		line-height: 0.7;
+		height: fit-content;
+		color: var(--text-color);
 	}
 
-	.home-container {
+	/* Card Container */
+	.card-inner-container {
+		height: 100%;
+		margin: 0;
 		display: flex;
 		flex-direction: column;
 		align-items: left;
@@ -160,11 +167,11 @@
 		aspect-ratio: 1 / 1.4;
 		box-sizing: border-box;
 		margin: auto;
-		/* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3); */
 	}
 
+	/* Footer Styles */
 	.footer {
-		margin: 0px;
+		margin: 0;
 		margin-top: auto;
 		display: flex;
 		flex-direction: column;
@@ -180,12 +187,7 @@
 		line-height: 1.2;
 	}
 
-	.card-container {
-		position: relative;
-		width: fit-content;
-		margin: 0;
-	}
-
+	/* Help Text */
 	.help-text {
 		position: absolute;
 		width: 100%;
