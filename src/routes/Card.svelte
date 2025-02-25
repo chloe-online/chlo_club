@@ -6,6 +6,11 @@
 	let flipped = $state(true);
 	let showHelpText = $state(false);
 	let helpTextTimer = $state(10000);
+	let isDragging = $state(false);
+	let rotation = $state(0);
+	let touchStartX = $state(0);
+
+	const TOUCH_FLIP_THRESHOLD = 45;
 
 	function toggleFlip() {
 		flipped = !flipped;
@@ -24,6 +29,34 @@
 		}
 	}
 
+	function handleTouchStart(event: TouchEvent) {
+		touchStartX = event.touches[0].clientX;
+		isDragging = true;
+	}
+
+	function handleTouchMove(event: TouchEvent) {
+		if (!isDragging) return;
+
+		const touchX = event.touches[0].clientX;
+		const deltaX = touchX - touchStartX;
+
+		// Convert the delta to degrees (adjust sensitivity as needed)
+		rotation = (deltaX / 2) % 360;
+
+		// If rotation exceeds threshold, update the flipped state
+		if (Math.abs(rotation) > TOUCH_FLIP_THRESHOLD) {
+			flipped = !flipped;
+			// Don't reset rotation, let it smoothly transition
+			touchStartX = touchX;
+			isDragging = false;
+		}
+	}
+
+	function handleTouchEnd() {
+		isDragging = false;
+		rotation = 0;
+	}
+
 	onMount(() => {
 		// Initial timer for when the page loads
 		if (flipped) {
@@ -35,8 +68,21 @@
 </script>
 
 <div class="card-container">
-	<div class="card" class:flipped role="button" tabindex="0">
-		<div class="card-faces">
+	<div
+		class="card"
+		class:flipped
+		class:sudden={!isDragging}
+		role="button"
+		tabindex="0"
+		ontouchstart={handleTouchStart}
+		ontouchmove={handleTouchMove}
+		ontouchend={handleTouchEnd}
+	>
+		<div
+			class="card-faces"
+			class:dragging={isDragging}
+			style="transform: rotateY({rotation + (flipped ? -180 : 0)}deg)"
+		>
 			<div class="card-front">
 				<div
 					class="card-inner-container"
@@ -89,11 +135,16 @@
 		width: 100%;
 		height: 100%;
 		transform-style: preserve-3d;
+		transition: transform 0.4s ease-out;
+	}
+
+	/* Add sudden transition for non-touch flips */
+	.card.sudden .card-faces {
 		transition: transform 0.8s;
 	}
 
-	.card.flipped .card-faces {
-		transform: rotateY(-180deg);
+	.card-faces.dragging {
+		transition: none;
 	}
 
 	/* Card Container */
