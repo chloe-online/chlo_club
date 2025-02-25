@@ -19,7 +19,7 @@
 			<Link name="music" link="https://soundcloud.com/kloe_e_club" onClick={handleClick} />
 		</li>
 		<li>
-			<Link name="games" link="https://chloe-online.itch.io" onClick={handleClick} />
+			<Link name="games" link="https://chloclub.itch.io" onClick={handleClick} />
 		</li>
 	</ul>
 	<hr />
