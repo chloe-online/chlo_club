@@ -7,10 +7,12 @@
 	let showHelpText = $state(false);
 	let helpTextTimer = $state(10000);
 	let isDragging = $state(false);
-	let rotation = $state(0);
+	let rotation = $state(180);
+	let restingRotation = $state(180);
 	let touchStartX = $state(0);
 
 	const TOUCH_FLIP_THRESHOLD = 45;
+	const TOUCH_SENSITIVITY = 0.5;
 
 	function toggleFlip() {
 		flipped = !flipped;
@@ -29,6 +31,12 @@
 		}
 	}
 
+	function handleClick() {
+		toggleFlip();
+		restingRotation = flipped ? 180 : 0;
+		rotation = restingRotation;
+	}
+
 	function handleTouchStart(event: TouchEvent) {
 		touchStartX = event.touches[0].clientX;
 		isDragging = true;
@@ -40,21 +48,26 @@
 		const touchX = event.touches[0].clientX;
 		const deltaX = touchX - touchStartX;
 
-		// Convert the delta to degrees (adjust sensitivity as needed)
-		rotation = (deltaX / 2) % 360;
-
-		// If rotation exceeds threshold, update the flipped state
-		if (Math.abs(rotation) > TOUCH_FLIP_THRESHOLD) {
-			flipped = !flipped;
-			// Don't reset rotation, let it smoothly transition
-			touchStartX = touchX;
-			isDragging = false;
-		}
+		// Convert the delta to degrees, but don't normalize
+		rotation = deltaX * TOUCH_SENSITIVITY + restingRotation;
 	}
 
 	function handleTouchEnd() {
 		isDragging = false;
-		rotation = 0;
+
+		// Calculate the difference from current rotation to nearest multiple of 180
+		const nearestMultiple = Math.round(rotation / 180) * 180;
+		const angleDiff = rotation - nearestMultiple;
+
+		console.log(angleDiff);
+		// If the rotation difference exceeds the threshold, flip the card
+		if (Math.abs(angleDiff) > TOUCH_FLIP_THRESHOLD) {
+			toggleFlip();
+		}
+
+		// Snap to nearest valid rotation (multiple of 180)
+		restingRotation = nearestMultiple;
+		rotation = restingRotation;
 	}
 
 	onMount(() => {
@@ -68,17 +81,22 @@
 </script>
 
 <div class="card-container">
-	<div class="card" class:flipped class:sudden={!isDragging} role="button" tabindex="0">
-		<div
-			class="card-faces"
-			class:dragging={isDragging}
-			style="transform: rotateY({rotation + (flipped ? -180 : 0)}deg)"
-		>
+	<div
+		class="card"
+		class:flipped
+		class:sudden={!isDragging}
+		role="button"
+		tabindex="0"
+		ontouchstart={handleTouchStart}
+		ontouchmove={handleTouchMove}
+		ontouchend={handleTouchEnd}
+	>
+		<div class="card-faces" class:dragging={isDragging} style="transform: rotateY({rotation}deg)">
 			<div class="card-front">
 				<div
 					class="card-inner-container"
-					onclick={toggleFlip}
-					onkeydown={toggleFlip}
+					onclick={handleClick}
+					onkeydown={handleClick}
 					role="button"
 					tabindex="0"
 				>
@@ -92,8 +110,8 @@
 			<div class="card-back">
 				<div
 					class="card-inner-container"
-					onclick={toggleFlip}
-					onkeydown={toggleFlip}
+					onclick={handleClick}
+					onkeydown={handleClick}
 					role="button"
 					tabindex="0"
 				>
