@@ -10,8 +10,9 @@
 	let rotation = $state(180);
 	let restingRotation = $state(180);
 	let touchStartX = $state(0);
+	let touchStartRotation = $state(0);
 
-	const TOUCH_FLIP_THRESHOLD = 45;
+	const TOUCH_FLIP_THRESHOLD = 30;
 	const TOUCH_SENSITIVITY = 0.5;
 
 	function toggleFlip() {
@@ -40,6 +41,7 @@
 
 	function handleTouchStart(event: TouchEvent) {
 		touchStartX = event.touches[0].clientX;
+		touchStartRotation = restingRotation;
 		isDragging = true;
 	}
 
@@ -56,21 +58,18 @@
 	function handleTouchEnd(event: TouchEvent) {
 		isDragging = false;
 
-		// Calculate the difference from current rotation to nearest multiple of 180
-		let nearestMultiple = Math.round(rotation / 180) * 180;
-		const angleDiff = rotation - nearestMultiple;
+		// Calculate the total rotation from where we started
+		const totalRotation = rotation - touchStartRotation;
 
-		// If the rotation difference exceeds the threshold, flip the card
-		if (Math.abs(angleDiff) > TOUCH_FLIP_THRESHOLD) {
-			nearestMultiple = nearestMultiple + 180 * Math.sign(angleDiff);
-		}
-
-		if (nearestMultiple !== restingRotation) {
+		// If we've rotated past the threshold, flip the card
+		if (Math.abs(totalRotation) > TOUCH_FLIP_THRESHOLD) {
+			restingRotation = touchStartRotation + 180 * Math.sign(totalRotation);
 			toggleFlip();
+		} else {
+			// If we haven't rotated enough, snap back to starting position
+			restingRotation = touchStartRotation;
 		}
 
-		// Snap to nearest valid rotation (multiple of 180)
-		restingRotation = nearestMultiple;
 		rotation = restingRotation;
 	}
 
