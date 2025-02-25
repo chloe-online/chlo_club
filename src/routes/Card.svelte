@@ -33,7 +33,8 @@
 
 	function handleClick() {
 		toggleFlip();
-		restingRotation = flipped ? 180 : 0;
+		const nearestMultiple = Math.round(rotation / 180) * 180;
+		restingRotation = nearestMultiple + 180;
 		rotation = restingRotation;
 	}
 
@@ -56,11 +57,15 @@
 		isDragging = false;
 
 		// Calculate the difference from current rotation to nearest multiple of 180
-		const nearestMultiple = Math.round(rotation / 180) * 180;
+		let nearestMultiple = Math.round(rotation / 180) * 180;
 		const angleDiff = rotation - nearestMultiple;
 
 		// If the rotation difference exceeds the threshold, flip the card
 		if (Math.abs(angleDiff) > TOUCH_FLIP_THRESHOLD) {
+			nearestMultiple = nearestMultiple + 180 * Math.sign(angleDiff);
+		}
+
+		if (nearestMultiple !== restingRotation) {
 			toggleFlip();
 		}
 
