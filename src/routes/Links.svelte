@@ -25,24 +25,16 @@
 	<hr />
 	<ul class="socials-list">
 		<li>
-			[
 			<a href="https://www.instagram.com/nowhere2chlo" onclick={handleClick}>ig</a>
-			]
 		</li>
 		<li>
-			[
 			<a href="https://www.twitter.com/chlo_exposed" onclick={handleClick}>x</a>
-			]
 		</li>
 		<li>
-			[
 			<a href="https://www.pi.fyi/u/chloexposed" onclick={handleClick}>pi</a>
-			]
 		</li>
 		<li>
-			[
 			<a href="https://bsky.app/profile/chloexposed.bsky.social" onclick={handleClick}>bsky</a>
-			]
 		</li>
 	</ul>
 </div>
@@ -91,11 +83,23 @@
 
 	.socials-list li {
 		list-style: none;
+		position: relative;
+	}
+
+	.socials-list li::before {
+		content: '[';
+		margin-right: 0.1em;
+	}
+
+	.socials-list li::after {
+		content: ']';
+		margin-left: 0.1em;
 	}
 
 	.socials-list a {
 		text-decoration: none;
 		color: var(--text-color);
+		padding: 0 0.2rem 0 0.2rem;
 	}
 
 	.socials-list a:hover {
