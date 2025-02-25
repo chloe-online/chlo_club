@@ -106,11 +106,11 @@
 					role="button"
 					tabindex="0"
 				>
-					<h1>♣</h1>
+					<h2>♣</h2>
 					<div class="card-pattern">
 						<h1>JOIN THE CLUB</h1>
 					</div>
-					<h1 style="transform: rotate(180deg)">♣</h1>
+					<h2 style="transform: rotate(180deg)">♣</h2>
 				</div>
 			</div>
 		</div>
@@ -181,10 +181,13 @@
 		justify-content: center;
 		align-items: center;
 		text-align: center;
+		user-select: none;
+		-webkit-user-select: none; /* Safari support */
 	}
 
 	.card-pattern h1,
-	.card-back h1 {
+	.card-back h1,
+	.card-back h2 {
 		margin: 0;
 		font-size: 4rem;
 		font-style: normal;
@@ -193,11 +196,13 @@
 		line-height: 1;
 	}
 
-	.card-back h1 {
+	.card-back h2 {
 		padding: 0;
 		line-height: 0.7;
 		height: fit-content;
 		color: var(--text-color);
+		user-select: none;
+		-webkit-user-select: none; /* Safari support */
 	}
 
 	/* Card Container */
