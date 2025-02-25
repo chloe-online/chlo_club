@@ -59,7 +59,6 @@
 		const nearestMultiple = Math.round(rotation / 180) * 180;
 		const angleDiff = rotation - nearestMultiple;
 
-		console.log(angleDiff);
 		// If the rotation difference exceeds the threshold, flip the card
 		if (Math.abs(angleDiff) > TOUCH_FLIP_THRESHOLD) {
 			toggleFlip();

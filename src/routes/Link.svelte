@@ -1,11 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	const { name, link, onClick } = $props();
-
-	onMount(() => {
-		console.log('Link page mounted');
-	});
 </script>
 
 <div class="link-container">
