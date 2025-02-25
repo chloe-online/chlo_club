@@ -39,13 +39,11 @@
 	}
 
 	function handleTouchStart(event: TouchEvent) {
-		event.preventDefault();
 		touchStartX = event.touches[0].clientX;
 		isDragging = true;
 	}
 
 	function handleTouchMove(event: TouchEvent) {
-		event.preventDefault();
 		if (!isDragging) return;
 
 		const touchX = event.touches[0].clientX;
@@ -56,7 +54,6 @@
 	}
 
 	function handleTouchEnd(event: TouchEvent) {
-		event.preventDefault();
 		isDragging = false;
 
 		// Calculate the difference from current rotation to nearest multiple of 180
@@ -87,7 +84,7 @@
 	});
 </script>
 
-<div class="card-container" style="touch-action: none;">
+<div class="card-container">
 	<div
 		class="card"
 		class:flipped
