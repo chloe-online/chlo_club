@@ -68,16 +68,7 @@
 </script>
 
 <div class="card-container">
-	<div
-		class="card"
-		class:flipped
-		class:sudden={!isDragging}
-		role="button"
-		tabindex="0"
-		ontouchstart={handleTouchStart}
-		ontouchmove={handleTouchMove}
-		ontouchend={handleTouchEnd}
-	>
+	<div class="card" class:flipped class:sudden={!isDragging} role="button" tabindex="0">
 		<div
 			class="card-faces"
 			class:dragging={isDragging}
