@@ -32,15 +32,17 @@
 		}
 	}
 
-	function handleClick(event: MouseEvent) {
+	function handleClick(event: MouseEvent | KeyboardEvent) {
 		toggleFlip();
 		const nearestMultiple = Math.round(rotation / 180) * 180;
-		if (event.currentTarget) {
+		if (event instanceof MouseEvent) {
 			const cardWidth = event.currentTarget.offsetWidth;
 			const offsetFromCenter = event.offsetX - cardWidth / 2;
 			restingRotation = nearestMultiple + 180 * Math.sign(offsetFromCenter);
-			rotation = restingRotation;
+		} else {
+			restingRotation = nearestMultiple + 180;
 		}
+		rotation = restingRotation;
 	}
 
 	function handleTouchStart(event: TouchEvent) {
