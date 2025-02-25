@@ -9,7 +9,9 @@
 	:global(body) {
 		margin: 0;
 		padding: 0;
-		height: 100vh;
+		height: 100dvh;
+		min-height: 100dvh;
+		overflow: hidden;
 		--bg-color: #ffffff;
 		--text-color: #333333;
 		--watermark-text-color: #cccccc;

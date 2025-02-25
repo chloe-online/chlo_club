@@ -18,7 +18,7 @@
 	@media (max-width: 768px) and (hover: none) and (pointer: coarse) {
 		.home-container {
 			justify-content: flex-start;
-			padding-top: 3rem;
+			padding-top: 4rem;
 		}
 	}
 </style>
