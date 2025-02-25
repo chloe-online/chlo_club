@@ -14,7 +14,8 @@
 		overflow: hidden;
 		--bg-color: #ffffff;
 		--text-color: #333333;
-		--watermark-text-color: #cccccc;
+		--link-color: #333333;
+		--watermark-text-color: #bbbbbb;
 		background-color: var(--bg-color);
 		color: var(--text-color);
 	}

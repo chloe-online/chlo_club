@@ -54,6 +54,7 @@
 		font-style: normal;
 		font-weight: 400;
 		font-family: inherit;
+		color: var(--watermark-text-color);
 	}
 
 	.links-list {
@@ -89,11 +90,13 @@
 	.socials-list li::before {
 		content: '[';
 		margin-right: 0.1em;
+		color: var(--watermark-text-color);
 	}
 
 	.socials-list li::after {
 		content: ']';
 		margin-left: 0.1em;
+		color: var(--watermark-text-color);
 	}
 
 	.socials-list a {

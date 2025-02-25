@@ -212,6 +212,7 @@
 		font-weight: 400;
 		font-family: inherit;
 		line-height: 1;
+		color: var(--watermark-text-color);
 	}
 
 	.card-back h2 {

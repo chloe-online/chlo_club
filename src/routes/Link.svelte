@@ -17,9 +17,9 @@
 
 	a {
 		font-size: 2rem;
-		color: var(--text-color);
+		color: var(--link-color);
 		background-color: var(--bg-color);
-		text-decoration: None;
+		text-decoration: none;
 	}
 
 	a:hover {
