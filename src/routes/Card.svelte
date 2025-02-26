@@ -209,7 +209,7 @@
 				<div
 					class="card-inner-container"
 					onclick={handleClick}
-					onkeydown={handleClick}
+					onkeydown={handleKeyDown}
 					role="button"
 					tabindex="0"
 				>
