@@ -10,16 +10,16 @@
 	<h2>things chloe does</h2>
 	<ul class="links-list">
 		<li>
-			<Link name="shot diary" link="https://chlo.exposed" onClick={handleClick} />
+			<Link name="music" link="https://soundcloud.com/kloe_e_club" onClick={handleClick} />
+		</li>
+		<li>
+			<Link name="games" link="https://chloclub.itch.io" onClick={handleClick} />
 		</li>
 		<li>
 			<Link name="thoughts" link="https://www.tumblr.com/blog/nowhere2chlo" onClick={handleClick} />
 		</li>
 		<li>
-			<Link name="music" link="https://soundcloud.com/kloe_e_club" onClick={handleClick} />
-		</li>
-		<li>
-			<Link name="games" link="https://chloclub.itch.io" onClick={handleClick} />
+			<Link name="shot diary" link="https://chlo.exposed" onClick={handleClick} />
 		</li>
 	</ul>
 	<hr />
