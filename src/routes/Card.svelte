@@ -7,6 +7,7 @@
 	let showHelpText = $state(false);
 	let helpTextTimer = $state(10000);
 	let isDragging = $state(false);
+	let isFlipping = $state(false);
 	let rotation = $state(180);
 	let verticalRotation = $state(0);
 	let restingRotation = $state(180);
@@ -28,6 +29,8 @@
 		flipped = !flipped;
 		showHelpText = false;
 
+		isFlipping = true;
+
 		// Clear any existing timer
 		if (helpTextTimer) {
 			clearTimeout(helpTextTimer);
@@ -39,18 +42,30 @@
 				showHelpText = true;
 			}, 10000);
 		}
+
+		setTimeout(() => {
+			isFlipping = false;
+		}, 800);
 	}
 
-	function handleClick(event: MouseEvent | KeyboardEvent) {
+	function handleClick(event: MouseEvent) {
 		toggleFlip();
 		const nearestMultiple = Math.round(rotation / 180) * 180;
 		if (event instanceof MouseEvent) {
 			const cardWidth = event.currentTarget.offsetWidth;
 			const offsetFromCenter = event.offsetX - cardWidth / 2;
 			restingRotation = nearestMultiple + 180 * Math.sign(offsetFromCenter);
-		} else {
+		}
+		rotation = restingRotation;
+	}
+
+	function handleKeyDown(event: KeyboardEvent) {
+		const nearestMultiple = Math.round(rotation / 180) * 180;
+		if (event.key === ' ') {
+			toggleFlip();
 			restingRotation = nearestMultiple + 180;
 		}
+
 		rotation = restingRotation;
 	}
 
@@ -114,6 +129,8 @@
 	}
 
 	function followPointer(event: MouseEvent | TouchEvent) {
+		if (isFlipping) return;
+
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 
@@ -167,7 +184,9 @@
 		<div
 			class="card-faces"
 			class:dragging={isDragging}
-			style="transform: rotateY({rotation}deg) rotateX({isDragging
+			style="transform: rotateY({isDragging
+				? rotation
+				: rotation + horizontalRotation}deg) rotateX({isDragging
 				? verticalTouchRotation
 				: verticalRotation}deg)"
 		>
@@ -175,7 +194,7 @@
 				<div
 					class="card-inner-container"
 					onclick={handleClick}
-					onkeydown={handleClick}
+					onkeydown={handleKeyDown}
 					role="button"
 					tabindex="0"
 				>
