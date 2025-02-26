@@ -8,12 +8,20 @@
 	let helpTextTimer = $state(10000);
 	let isDragging = $state(false);
 	let rotation = $state(180);
+	let verticalRotation = $state(0);
 	let restingRotation = $state(180);
 	let touchStartX = $state(0);
+	let touchStartY = $state(0);
 	let touchStartRotation = $state(0);
+	let horizontalRotation = $state(0);
+	let verticalTouchRotation = $state(0);
 
 	const TOUCH_FLIP_THRESHOLD = 30;
 	const TOUCH_SENSITIVITY = 0.5;
+	const VERTICAL_SENSITIVITY = 0.5;
+	const VERTICAL_CLAMP_DEGREES = 5;
+	const EASY_THRESHOLD = 5;
+	const RESISTANCE_FACTOR = 2;
 
 	function toggleFlip() {
 		flipped = !flipped;
@@ -47,6 +55,7 @@
 
 	function handleTouchStart(event: TouchEvent) {
 		touchStartX = event.touches[0].clientX;
+		touchStartY = event.touches[0].clientY;
 		touchStartRotation = restingRotation;
 		isDragging = true;
 	}
@@ -55,10 +64,30 @@
 		if (!isDragging) return;
 
 		const touchX = event.touches[0].clientX;
-		const deltaX = touchX - touchStartX;
+		const touchY = event.touches[0].clientY;
 
-		// Convert the delta to degrees, but don't normalize
+		// Horizontal rotation (card flip) remains the same
+		const deltaX = touchX - touchStartX;
 		rotation = deltaX * TOUCH_SENSITIVITY + restingRotation;
+
+		// Calculate vertical tilt with resistance
+		const deltaY = touchY - touchStartY;
+		const rawVerticalRotation = deltaY * TOUCH_SENSITIVITY;
+
+		// Apply non-linear resistance to vertical rotation beyond threshold
+		if (Math.abs(rawVerticalRotation) > EASY_THRESHOLD) {
+			const excess = Math.abs(rawVerticalRotation) - EASY_THRESHOLD;
+			const resistedExcess = excess / (1 + (excess * RESISTANCE_FACTOR) / VERTICAL_CLAMP_DEGREES);
+			verticalTouchRotation = Math.sign(rawVerticalRotation) * (EASY_THRESHOLD + resistedExcess);
+		} else {
+			verticalTouchRotation = rawVerticalRotation;
+		}
+
+		// Final clamping
+		verticalTouchRotation = Math.max(
+			Math.min(verticalTouchRotation, VERTICAL_CLAMP_DEGREES),
+			-VERTICAL_CLAMP_DEGREES
+		);
 	}
 
 	function handleTouchEnd(event: TouchEvent) {
@@ -77,6 +106,39 @@
 		}
 
 		rotation = restingRotation;
+		verticalTouchRotation = 0; // Reset vertical rotation
+	}
+
+	function handleMouseMove(event: MouseEvent) {
+		followPointer(event);
+	}
+
+	function followPointer(event: MouseEvent | TouchEvent) {
+		const windowHeight = window.innerHeight;
+		const windowWidth = window.innerWidth;
+
+		// Calculate vertical rotation
+		const verticalOffsetFromCenter = event.clientY - windowHeight / 2;
+		verticalRotation = -verticalOffsetFromCenter * VERTICAL_SENSITIVITY;
+
+		// Calculate horizontal rotation (similar to vertical)
+		const horizontalOffsetFromCenter = event.clientX - windowWidth / 2;
+		horizontalRotation = horizontalOffsetFromCenter * VERTICAL_SENSITIVITY; // Negative for natural feeling movement
+
+		// Clamp both rotations
+		verticalRotation = Math.max(
+			Math.min(verticalRotation, VERTICAL_CLAMP_DEGREES),
+			-VERTICAL_CLAMP_DEGREES
+		);
+		horizontalRotation = Math.max(
+			Math.min(horizontalRotation, VERTICAL_CLAMP_DEGREES),
+			-VERTICAL_CLAMP_DEGREES
+		);
+	}
+
+	function handleMouseLeave() {
+		verticalRotation = 0;
+		horizontalRotation = 0;
 	}
 
 	onMount(() => {
@@ -99,8 +161,16 @@
 		ontouchstart={handleTouchStart}
 		ontouchmove={handleTouchMove}
 		ontouchend={handleTouchEnd}
+		onmousemove={handleMouseMove}
+		onmouseleave={handleMouseLeave}
 	>
-		<div class="card-faces" class:dragging={isDragging} style="transform: rotateY({rotation}deg)">
+		<div
+			class="card-faces"
+			class:dragging={isDragging}
+			style="transform: rotateY({rotation}deg) rotateX({isDragging
+				? verticalTouchRotation
+				: verticalRotation}deg)"
+		>
 			<div class="card-front">
 				<div
 					class="card-inner-container"
