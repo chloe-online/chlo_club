@@ -21,7 +21,8 @@
 	const VERTICAL_SENSITIVITY = 0.5;
 	const VERTICAL_CLAMP_DEGREES = 5;
 	const EASY_THRESHOLD = 5;
-	const RESISTANCE_FACTOR = 2;
+	const RESISTANCE_FACTOR = 0.15;
+	const MAX_ROTATION = 5;
 
 	function toggleFlip() {
 		flipped = !flipped;
@@ -70,24 +71,23 @@
 		const deltaX = touchX - touchStartX;
 		rotation = deltaX * TOUCH_SENSITIVITY + restingRotation;
 
-		// Calculate vertical tilt with resistance
+		// Calculate vertical tilt with smooth resistance
 		const deltaY = touchY - touchStartY;
 		const rawVerticalRotation = deltaY * TOUCH_SENSITIVITY;
 
-		// Apply non-linear resistance to vertical rotation beyond threshold
+		//Improved resistance formula
 		if (Math.abs(rawVerticalRotation) > EASY_THRESHOLD) {
 			const excess = Math.abs(rawVerticalRotation) - EASY_THRESHOLD;
-			const resistedExcess = excess / (1 + (excess * RESISTANCE_FACTOR) / VERTICAL_CLAMP_DEGREES);
+			// Use arctangent for a smooth curve that approaches the max value
+			const resistedExcess =
+				(Math.atan(excess * RESISTANCE_FACTOR) / (Math.PI / 2)) * (MAX_ROTATION - EASY_THRESHOLD);
 			verticalTouchRotation = Math.sign(rawVerticalRotation) * (EASY_THRESHOLD + resistedExcess);
 		} else {
 			verticalTouchRotation = rawVerticalRotation;
 		}
 
-		// Final clamping
-		verticalTouchRotation = Math.max(
-			Math.min(verticalTouchRotation, VERTICAL_CLAMP_DEGREES),
-			-VERTICAL_CLAMP_DEGREES
-		);
+		// Final safety clamp
+		verticalTouchRotation = Math.max(Math.min(verticalTouchRotation, MAX_ROTATION), -MAX_ROTATION);
 	}
 
 	function handleTouchEnd(event: TouchEvent) {
