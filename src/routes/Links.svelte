@@ -31,10 +31,13 @@
 			<a href="https://www.twitter.com/chlo_exposed" onclick={handleClick}>x</a>
 		</li>
 		<li>
-			<a href="https://www.pi.fyi/u/chloexposed" onclick={handleClick}>pi</a>
+			<a href="https://www.pi.fyi/u/chloexposed" onclick={handleClick}>pi.fyi</a>
 		</li>
 		<li>
 			<a href="https://bsky.app/profile/chloexposed.bsky.social" onclick={handleClick}>bsky</a>
+		</li>
+		<li>
+			<a href="https://www.are.na/chloe-straus/channels" onclick={handleClick}>are.na</a>
 		</li>
 	</ul>
 </div>
@@ -73,13 +76,15 @@
 	.socials-list {
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
 		text-align: center;
 		margin: 0px;
-		gap: 1rem;
+		gap: 0.5rem;
 		padding: 0;
 		font-size: 1rem;
+		max-width: 100%;
 	}
 
 	.socials-list li {
