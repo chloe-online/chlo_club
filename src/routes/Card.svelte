@@ -325,6 +325,7 @@
 		color: var(--text-color);
 		font-size: 1.5rem;
 		border: 1px solid var(--text-color);
+		outline: 1px solid transparent;
 		border-radius: 30px;
 		padding: 30px;
 		width: min(320px, 90vw);
