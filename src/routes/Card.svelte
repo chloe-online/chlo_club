@@ -16,6 +16,8 @@
 	let touchStartRotation = $state(0);
 	let horizontalRotation = $state(0);
 	let verticalTouchRotation = $state(0);
+	let initialLoad = $state(true);
+	let cardReady = $state(false);
 
 	const TOUCH_FLIP_THRESHOLD = 30;
 	const TOUCH_SENSITIVITY = 0.5;
@@ -30,6 +32,9 @@
 		showHelpText = false;
 
 		isFlipping = true;
+
+		// Save flip state to cookie
+		document.cookie = `cardFlipped=${flipped}; max-age=31536000; path=/; SameSite=Strict`;
 
 		// Clear any existing timer
 		if (helpTextTimer) {
@@ -159,73 +164,97 @@
 	}
 
 	onMount(() => {
+		// Check for saved flip state in cookie
+		const cookies = document.cookie.split(';');
+		const flipCookie = cookies.find((cookie) => cookie.trim().startsWith('cardFlipped='));
+
+		if (flipCookie) {
+			const flipValue = flipCookie.split('=')[1].trim();
+			flipped = flipValue === 'true';
+			rotation = flipped ? 180 : 0;
+			restingRotation = rotation;
+		}
+
+		// Mark card as ready to render
+		cardReady = true;
+
 		// Initial timer for when the page loads
 		if (flipped) {
 			helpTextTimer = setTimeout(() => {
 				showHelpText = true;
 			}, 10000);
 		}
+
+		// Set initialLoad to false after a brief delay to allow initial rendering
+		setTimeout(() => {
+			initialLoad = false;
+		}, 100); // Increased from 50ms to 100ms for more safety
 	});
 </script>
 
-<div class="card-container">
-	<div
-		class="card"
-		class:flipped
-		class:sudden={!isDragging}
-		role="button"
-		tabindex="0"
-		ontouchstart={handleTouchStart}
-		ontouchmove={handleTouchMove}
-		ontouchend={handleTouchEnd}
-		onmousemove={handleMouseMove}
-		onmouseleave={handleMouseLeave}
-	>
+{#if cardReady}
+	<div class="card-container">
 		<div
-			class="card-faces"
-			class:dragging={isDragging}
-			style="transform: rotateY({isDragging
-				? rotation
-				: rotation + horizontalRotation}deg) rotateX({isDragging
-				? verticalTouchRotation
-				: verticalRotation}deg)"
+			class="card"
+			class:flipped
+			class:sudden={!isDragging}
+			class:no-transition={initialLoad}
+			role="button"
+			tabindex="0"
+			ontouchstart={handleTouchStart}
+			ontouchmove={handleTouchMove}
+			ontouchend={handleTouchEnd}
+			onmousemove={handleMouseMove}
+			onmouseleave={handleMouseLeave}
 		>
-			<div class="card-front">
-				<div
-					class="card-inner-container"
-					onclick={handleClick}
-					onkeydown={handleKeyDown}
-					role="button"
-					tabindex="0"
-				>
-					<Links />
-					<div class="footer">
-						<p>always made with &lt;3</p>
-						<p>by chloe</p>
+			<div
+				class="card-faces"
+				class:dragging={isDragging}
+				style="transform: rotateY({isDragging
+					? rotation
+					: rotation + horizontalRotation}deg) rotateX({isDragging
+					? verticalTouchRotation
+					: verticalRotation}deg)"
+			>
+				<div class="card-front">
+					<div
+						class="card-inner-container"
+						onclick={handleClick}
+						onkeydown={handleKeyDown}
+						role="button"
+						tabindex="0"
+					>
+						<Links />
+						<div class="footer">
+							<p>always made with &lt;3</p>
+							<p>by chloe</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="card-back">
-				<div
-					class="card-inner-container"
-					onclick={handleClick}
-					onkeydown={handleKeyDown}
-					role="button"
-					tabindex="0"
-				>
-					<h2>♣</h2>
-					<div class="card-pattern">
-						<h1>JOIN THE CLUB</h1>
+				<div class="card-back">
+					<div
+						class="card-inner-container"
+						onclick={handleClick}
+						onkeydown={handleKeyDown}
+						role="button"
+						tabindex="0"
+					>
+						<h2>♣</h2>
+						<div class="card-pattern">
+							<h1>JOIN THE CLUB</h1>
+						</div>
+						<h2 style="transform: rotate(180deg)">♣</h2>
 					</div>
-					<h2 style="transform: rotate(180deg)">♣</h2>
 				</div>
 			</div>
 		</div>
+		<div class="help-text" class:visible={showHelpText}>
+			<p>⟳ flip me...</p>
+		</div>
 	</div>
-	<div class="help-text" class:visible={showHelpText}>
-		<p>⟳ flip me...</p>
-	</div>
-</div>
+{:else}
+	<div class="card-placeholder"></div>
+{/if}
 
 <style>
 	/* Card Base Styles */
@@ -371,5 +400,17 @@
 
 	.help-text p {
 		margin: 0;
+	}
+
+	/* Add this new style for initial load */
+	.card.no-transition .card-faces {
+		transition: none;
+	}
+
+	/* Add placeholder style */
+	.card-placeholder {
+		width: min(320px, 90vw);
+		aspect-ratio: 1 / 1.4;
+		margin: auto;
 	}
 </style>
