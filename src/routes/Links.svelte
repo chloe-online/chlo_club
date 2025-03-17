@@ -10,7 +10,7 @@
 	<h2>things chloe does</h2>
 	<ul class="links-list">
 		<li>
-			<Link name="music" link="https://soundcloud.com/kloe_e_club" onClick={handleClick} />
+			<Link name="music" link="https://soundcloud.com/klo_club" onClick={handleClick} />
 		</li>
 		<li>
 			<Link name="games" link="https://chloclub.itch.io" onClick={handleClick} />
