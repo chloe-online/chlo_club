@@ -7,34 +7,29 @@
 </script>
 
 <div class="links-container">
-	<h2>things chloe does</h2>
+	<h2>things chloe makes</h2>
 	<ul class="links-list">
 		<li>
-			<Link name="music" link="https://soundcloud.com/klo_club" onClick={handleClick} />
+			<Link name="music" link="https://soundcloud.com/chloe-music-fanclub" onClick={handleClick} />
 		</li>
 		<li>
-			<Link name="games" link="https://chloclub.itch.io" onClick={handleClick} />
+			<Link name="shot diary" link="https://chlo.exposed" onClick={handleClick} />
 		</li>
 		<li>
 			<Link name="thoughts" link="https://www.tumblr.com/blog/nowhere2chlo" onClick={handleClick} />
 		</li>
 		<li>
-			<Link name="shot diary" link="https://chlo.exposed" onClick={handleClick} />
+			<Link name="games" link="https://chloclub.itch.io" onClick={handleClick} />
 		</li>
 	</ul>
 	<hr />
 	<ul class="socials-list">
+		<h3>find me on</h3>
 		<li>
 			<a href="https://www.instagram.com/nowhere2chlo" onclick={handleClick}>ig</a>
 		</li>
 		<li>
-			<a href="https://www.twitter.com/chlo_exposed" onclick={handleClick}>x</a>
-		</li>
-		<li>
 			<a href="https://www.pi.fyi/u/chloexposed" onclick={handleClick}>pi.fyi</a>
-		</li>
-		<li>
-			<a href="https://bsky.app/profile/chloexposed.bsky.social" onclick={handleClick}>bsky</a>
 		</li>
 		<li>
 			<a href="https://www.are.na/chloe-straus/channels" onclick={handleClick}>are.na</a>
@@ -54,6 +49,15 @@
 	h2 {
 		margin: 0;
 		font-size: 2rem;
+		font-style: normal;
+		font-weight: 400;
+		font-family: inherit;
+		color: var(--watermark-text-color);
+	}
+
+	h3 {
+		margin: 0;
+		font-size: 1rem;
 		font-style: normal;
 		font-weight: 400;
 		font-family: inherit;
@@ -119,6 +123,6 @@
 		border: 0;
 		height: 1px;
 		background-color: var(--watermark-text-color);
-		margin: 1rem 0;
+		margin: 1rem 0 0 0;
 	}
 </style>
