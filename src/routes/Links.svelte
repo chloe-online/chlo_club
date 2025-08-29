@@ -29,7 +29,7 @@
 			<a href="https://www.instagram.com/chloemusic8008" onclick={handleClick}>ig</a>
 		</li>
 		<li>
-			<a href="https://www.pi.fyi/u/chloexposed" onclick={handleClick}>pi.fyi</a>
+			<a href="https://www.pi.fyi/u/chloemusic8008" onclick={handleClick}>pi.fyi</a>
 		</li>
 		<li>
 			<a href="https://www.are.na/chloe-straus/channels" onclick={handleClick}>are.na</a>
