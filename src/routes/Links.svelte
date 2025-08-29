@@ -10,7 +10,7 @@
 	<h2>things chloe makes</h2>
 	<ul class="links-list">
 		<li>
-			<Link name="music" link="https://soundcloud.com/chloe-music-fanclub" onClick={handleClick} />
+			<Link name="music" link="https://soundcloud.com/chloemusic8008" onClick={handleClick} />
 		</li>
 		<li>
 			<Link name="shot diary" link="https://chlo.exposed" onClick={handleClick} />
@@ -26,7 +26,7 @@
 	<ul class="socials-list">
 		<h3>find me on</h3>
 		<li>
-			<a href="https://www.instagram.com/nowhere2chlo" onclick={handleClick}>ig</a>
+			<a href="https://www.instagram.com/chloemusic8008" onclick={handleClick}>ig</a>
 		</li>
 		<li>
 			<a href="https://www.pi.fyi/u/chloexposed" onclick={handleClick}>pi.fyi</a>
