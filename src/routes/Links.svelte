@@ -34,6 +34,9 @@
 		<li>
 			<a href="https://www.are.na/chloe-straus/channels" onclick={handleClick}>are.na</a>
 		</li>
+    <li>
+      <a href="https://downloadmorebass.com" onclick={handleClick}>www.downloadmorebass.com</a>
+    </li>
 	</ul>
 </div>
 
